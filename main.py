@@ -1,9 +1,2 @@
-print("ASd")
-
-def  ad():
-    print("нет ты иди работать")
-ad()
-
-    
-print("DSDSADSA")
-print("asdsad")
+def work():
+    print("go and fuck yourself")
