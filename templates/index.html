@@ -1,0 +1,155 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra Todo | Продвинутый менеджер задач</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="categories-header">
+            <h2>Категории</h2>
+            <button class="add-category" onclick="document.getElementById('category-modal').showModal()">+</button>
+        </div>
+        <ul class="category-list">
+            {% for category in categories %}
+            <li class="category-item {% if category.id == current_category %}active{% endif %}" 
+                onclick="window.location.href='/?category={{ category.id }}'">
+                <span>{{ category.name }}</span>
+                <div class="category-actions">
+                    <span class="task-count">{{ category.task_count }}</span>
+                    {% if category.id != 1 %}
+                    <button class="delete-category-btn" 
+                            onclick="deleteCategory(event, {{ category.id }})" 
+                            title="Удалить категорию">×</button>
+                    {% endif %}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <form class="task-form" method="POST">
+            <input type="text" 
+                   name="content" 
+                   class="task-input" 
+                   placeholder="✍️ Введите новую задачу..." 
+                   required>
+            <select name="category">
+                {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="add-btn">Добавить задачу →</button>
+        </form>
+
+        <ul class="task-list">
+            {% for task in tasks %}
+            <li class="task-item {% if task.completed %}completed{% endif %}">
+                <div class="task-content">{{ task.content }}</div>
+                <div class="task-actions">
+                    <a href="{{ url_for('complete', task_id=task.id) }}" 
+                       class="task-btn complete-btn">
+                        {{ '↻ Вернуть' if task.completed else '✓ Выполнить' }}
+                    </a>
+                    <a href="{{ url_for('delete', task_id=task.id) }}" 
+                       class="task-btn delete-btn">✕ Удалить</a>
+                </div>
+            </li>
+            {% else %}
+            <div style="text-align: center; padding: 2rem; color: #6b7280;">
+                🎉 Пока нет задач в этой категории!
+            </div>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <dialog id="category-modal">
+        <form method="POST" action="/add_category" onsubmit="document.getElementById('category-modal').close()">
+            <h3 style="margin-top: 0;">➕ Новая категория</h3>
+            <input type="text" 
+                   name="category_name" 
+                   class="task-input" 
+                   placeholder="Название категории" 
+                   required>
+            <div style="margin-top: 1.5rem; display: flex; gap: 0.8rem; justify-content: flex-end;">
+                <button type="button" 
+                        class="task-btn delete-btn" 
+                        onclick="document.getElementById('category-modal').close()">
+                    Отмена
+                </button>
+                <button type="submit" class="task-btn complete-btn">Создать</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script>
+        // Анимация снега
+        function createSnow() {
+            const container = document.createElement('div');
+            container.className = 'snowfall';
+            
+            for(let i = 0; i < 50; i++) {
+                const snow = document.createElement('div');
+                snow.className = 'snow';
+                snow.style.left = Math.random() * 100 + '%';
+                snow.style.animationDuration = Math.random() * 3 + 2 + 's';
+                snow.style.animationDelay = Math.random() * 5 + 's';
+                snow.style.opacity = Math.random();
+                container.appendChild(snow);
+            }
+            
+            document.body.appendChild(container);
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            const items = document.querySelectorAll('.task-item');
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
+            
+            items.forEach(item => {
+                item.style.transform = `
+                    rotateX(${mouseY * 2}deg)
+                    rotateY(${mouseX * 2}deg)
+                    translateZ(10px)
+                `;
+            });
+        });
+
+
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (!confirm('Вы уверены, что хотите удалить задачу?')) {
+                    e.preventDefault();
+                }
+            });
+        });
+
+        function deleteCategory(event, categoryId) {
+            event.stopPropagation();
+            
+            if (confirm('Удалить категорию? Все задачи будут перемещены в категорию "Важное".')) {
+                window.location.href = '/delete_category/' + categoryId;
+            }
+        }
+
+   
+        document.querySelector('.task-form').addEventListener('submit', function() {
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerHTML = 'Добавляем...';
+            btn.disabled = true;
+        });
+
+      
+        window.addEventListener('DOMContentLoaded', () => {
+            createSnow();
+        });
+    </script>
+</body>
+</html>

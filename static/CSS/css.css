@@ -1,0 +1,371 @@
+:root {
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --danger: #ef4444;
+            --glass: rgba(255, 255, 255, 0.9);
+            --shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            --border-radius: 12px;
+            --blur: blur(10px);
+        }
+
+        body {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, #f3f4f6, #e5e7eb);
+            font-family: 'Inter', sans-serif;
+            color: #1f2937;
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            z-index: 100;
+        }
+
+        .categories-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .add-category {
+            background: var(--primary);
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .add-category:hover {
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .category-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .category-item {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: var(--border-radius);
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: var(--blur);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: slideIn 0.6s ease-out backwards;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid transparent;
+        }
+
+        .category-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.4),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .category-item:hover::before {
+            left: 100%;
+        }
+
+        .category-item.active {
+            background: var(--primary-light);
+            color: white;
+            transform: translateX(8px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            border-color: var(--primary);
+        }
+
+        .main-content {
+            padding: 2rem;
+            perspective: 1000px;
+        }
+
+        .task-form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background: var(--glass);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            backdrop-filter: var(--blur);
+            box-shadow: var(--shadow);
+        }
+
+        .task-input {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .task-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        select {
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            border: 2px solid rgba(99, 102, 241, 0.2);
+            background: white;
+            cursor: pointer;
+        }
+
+        .add-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .add-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        @keyframes taskAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .task-item {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            animation: taskAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            transform-style: preserve-3d;
+        }
+
+        .task-item:hover {
+            transform: translateY(-2px) rotateX(2deg) rotateY(2deg);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .task-content {
+            flex: 1;
+            margin: 0 1.5rem;
+            transition: 0.3s;
+        }
+
+        .completed .task-content {
+            text-decoration: line-through;
+            opacity: 0.6;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .task-btn {
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .complete-btn {
+            background: var(--secondary);
+        }
+
+        .complete-btn:hover {
+            background: #059669;
+        }
+
+        .delete-btn {
+            background: var(--danger);
+        }
+
+        .delete-btn:hover {
+            background: #dc2626;
+        }
+
+        dialog {
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            width: 400px;
+            max-width: 90%;
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            animation: modalOpen 0.4s ease-out;
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+        }
+
+        @keyframes modalOpen {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .category-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .delete-category-btn {
+            background: rgba(239, 68, 68, 0.1);
+            border: none;
+            color: var(--danger);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .delete-category-btn:hover {
+            background: var(--danger);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .task-count {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            border-radius: 20px;
+            padding: 2px 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .category-item.active .task-count {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: fixed;
+                width: 80%;
+                transform: translateX(-100%);
+                transition: 0.3s transform ease;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+
+        .snowfall {
+            position: fixed;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .snow {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
