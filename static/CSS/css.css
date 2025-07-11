@@ -1,3 +1,59 @@
+@keyframes modalOpen {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+@keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+@keyframes taskAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+   @media (max-width: 768px) {
+            body {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                position: fixed;
+                width: 80%;
+                transform: translateX(-100%);
+                transition: 0.3s transform ease;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+        }
+
+       @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        
 :root {
             --primary: #6366f1;
             --primary-light: #818cf8;
@@ -59,16 +115,7 @@
             transform: rotate(90deg) scale(1.1);
         }
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
+        
 
         .category-list {
             list-style: none;
@@ -178,17 +225,7 @@
             box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
-        @keyframes taskAppear {
-            0% {
-                opacity: 0;
-                transform: translateY(20px) scale(0.9);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
+        
         .task-list {
             list-style: none;
             padding: 0;
@@ -276,16 +313,8 @@
             backdrop-filter: blur(4px);
         }
 
-        @keyframes modalOpen {
-            from {
-                opacity: 0;
-                transform: scale(0.8) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
+        
+        
 
         .category-actions {
             display: flex;
@@ -330,22 +359,7 @@
             color: white;
         }
 
-        @media (max-width: 768px) {
-            body {
-                grid-template-columns: 1fr;
-            }
-            
-            .sidebar {
-                position: fixed;
-                width: 80%;
-                transform: translateX(-100%);
-                transition: 0.3s transform ease;
-            }
-            
-            .sidebar.active {
-                transform: translateX(0);
-            }
-        }
+     
 
         .snowfall {
             position: fixed;
@@ -364,8 +378,4 @@
             animation: fall linear infinite;
         }
 
-        @keyframes fall {
-            to {
-                transform: translateY(100vh) rotate(360deg);
-            }
-        }
+ 
