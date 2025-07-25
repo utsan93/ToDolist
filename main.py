@@ -251,7 +251,7 @@ def delete_category(category_id):
     if not g.user:
         return redirect(url_for('login'))
     
-    # Нельзя удалить системные категории
+
     if category_id == 1 or category_id == 2:
         flash('Системные категории нельзя удалить', 'danger')
         return redirect(url_for('index'))
@@ -346,4 +346,4 @@ def complete(task_id):
 if __name__ == '__main__':
     with app.app_context():
         init_db()
-    app.run(debug=True)
+    app.run(debug=True, port=os.getenv("PORT", default=5000))
