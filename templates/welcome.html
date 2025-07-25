@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UltraTodo | Управляй своими задачами</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/CSS/welcome.css">
+
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="hero-content">
+            <h1>Управляй своими задачами с <span class="highlight">UltraTodo</span></h1>
+            <p>Мощный и элегантный менеджер задач, который поможет вам организовать вашу жизнь. Создавайте, сортируйте и отслеживайте задачи с удовольствием.</p>
+            
+            <div class="btn-group">
+                <a href="{{ url_for('register') }}" class="btn btn-primary">Начать работу</a>
+                <a href="{{ url_for('login') }}" class="btn btn-secondary">Уже есть аккаунт? Войти</a>
+            </div>
+        </div>
+        
+        <div class="card-container">
+            <div class="card floating">
+                <h2>Почему UltraTodo?</h2>
+                <ul class="features" id="features">
+                    <li>Персональный менеджер задач</li>
+                    <li>Защита важных задач</li>
+                    <li>Синхронизация между устройствами</li>
+                    <li>Категории для организации</li>
+                    <li>Красивый и интуитивный интерфейс</li>
+                    <li>Бесплатно и без рекламы</li>
+                </ul>
+                
+                <div class="testimonial">
+                    <p>"UltraTodo полностью изменил мой подход к планированию. Теперь я успеваю всё!"</p>
+                    <div class="author">— Паша, техник</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+   
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+       
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * 100;
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                const opacity = Math.random() * 0.5 + 0.1;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.opacity = opacity;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+
+        document.addEventListener('mousemove', (e) => {
+            const card = document.querySelector('.card');
+            if (card) {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+                card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            }
+        });
+        
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+        });
+    </script>
+</body>
+</html>

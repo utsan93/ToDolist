@@ -1,0 +1,76 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в UltraTodo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/CSS/log.css">
+
+</head>
+<body>
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="flash-message flash-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+    </div>
+    
+    <div class="container">
+        <div class="logo">
+            <h1>Ultra<span>Todo</span></h1>
+        </div>
+        
+        <div class="card floating">
+            <h2>Вход в аккаунт</h2>
+            
+            <form action="{{ url_for('login') }}" method="POST">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="your@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Ваш пароль" required>
+                    <a href="#" style="display: block; text-align: right; margin-top: 8px; color: var(--primary); font-size: 0.9rem;">Забыли пароль?</a>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Войти</button>
+            </form>
+            
+            <div class="divider">
+                <span>или</span>
+            </div>
+            
+            <button class="btn btn-google">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              
+                </svg>
+                Войти через Google
+            </button>
+            
+            <div class="footer-links">
+                <p>Еще нет аккаунта? <a href="{{ url_for('register') }}">Зарегистрируйтесь</a></p>
+                <p><a href="{{ url_for('welcome') }}">← Вернуться на главную</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+  
+        document.addEventListener('DOMContentLoaded', () => {
+            const card = document.querySelector('.card');
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100);
+        });
+       
+    </script>
+</body>
+</html>
